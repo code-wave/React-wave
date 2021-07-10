@@ -12,6 +12,7 @@ import { WarningAlert } from "../shared/Alerts";
 import { config } from "../shared/config";
 import axios from 'axios';
 import API from '../shared/config';
+import Arrow from "../assets/image/arrow.jpg";
 
 
 const AddPage = (props) => {
@@ -24,17 +25,16 @@ const AddPage = (props) => {
 	//회원 기입사항
 	const [title, setTitle] = useState('');
 	const [content, setContent] = useState('');
-	const [memberNum, setMemberNum] = useState(0);
+	const [memberNum, setMemberNum] = useState();
 	const [startDate, setStartDate] = useState(null);
 	const [endDate, setEndDate] = useState(null);
 	const [user_id, setUserId] = useState(1);
-	const [is_online, setIsOnline] = useState(false);
-	const [techStack, setTechStack] = useState(["react"]);
-	const [techStackList, setTechStackList] = useState(["react"]);
+	// const [is_online, setIsOnline] = useState(false);
+	const [location, setLocation] = React.useState("온라인");
+	const [techStack, setTechStack] = useState("");
+	const [techStackList, setTechStackList] = useState([]);
 	const [color, setColor] = useState("black");
 
-	//기술스택 검색창에 입력되는 내용
-	const [inputSkill, setInputSkill] = useState('');
 
 	useEffect(() => {
 		//렌더링 되자마자 서버에서 tech_stack 리스트를 받아옴
@@ -48,30 +48,31 @@ const AddPage = (props) => {
 				console.log(e);
 			}
 		}
+
 		fetchGetSkills();
 	}, []);
 
 
-	const PostSkills = async () => {
-		alert(1);
+	// const PostSkills = async () => {
+	// 	alert(1);
 
-		techStackList.forEach(techStack => {
-			setTechStack(techStack);
-		})
+	// 	techStackList.forEach(techStack => {
+	// 		setTechStack(techStack);
+	// 	});
 
-		axios({
-			method: 'post',
-			url: `${config.api}/tech-stack`,
-			data: { 'tech_name' : techStack }
-		}).then(res => {
-			console.log(res.data);
-			alert(res);
-		}).catch(err => {
-			console.log(err.response.data);
-		})
+	// 	axios({
+	// 		method: 'post',
+	// 		url: `${config.api}/tech-stack`,
+	// 		data: { 'tech_name' : techStack }
+	// 	}).then(res => {
+	// 		console.log(res.data);
+	// 		alert(res);
+	// 	}).catch(err => {
+	// 		console.log(err.response.data);
+	// 	})
 		
-    // history.push("/mypage");
-	}
+  //   // history.push("/mypage");
+	// }
 
 	const AddFilter = (e) => {
 		let active = e.target.active;
@@ -120,7 +121,8 @@ const AddPage = (props) => {
 				start_date: startDate,
 				end_date: endDate,
 				user_id: user_id,
-				is_online: is_online,
+				// is_online: is_online,
+				is_online: location,
 				tech_stack: techStack
 			}
 		
@@ -140,6 +142,19 @@ const AddPage = (props) => {
 		
     // history.push("/mypage");
 	}
+
+		const GetCategory = (val) => {
+        switch(val){
+            case "react":
+                return "level";
+            case "프로그래밍 언어":
+                return "language";
+            case "문제 모음":
+                return "reference";
+            default:
+                return null;
+        }
+    };
 
 	return (
 		<AddBlock>
@@ -161,7 +176,10 @@ const AddPage = (props) => {
 					<Text bold size="16"  marginTop="20" marginBottom="6">
 						기술스택
 				</Text>
-				<TechStackList ref={filter_box}>
+
+				<LanguageInput type='text' value={techStack} onChange={(e) => setTechStack(e.target.value)} placeholder="React/Go" />
+
+				{/* <TechStackList ref={filter_box}>
 					{techStackList.map(techStack => (
 						<List
 							key={techStack}
@@ -170,7 +188,7 @@ const AddPage = (props) => {
 							{techStack}
 						</List>
 					))}
-				</TechStackList>
+				</TechStackList> */}
 				
 							{/* <SkillInput
 								placeholder="검색"
@@ -200,8 +218,16 @@ const AddPage = (props) => {
 
 					<Text bold size="16" marginTop="20" marginBottom="6">
 						모임형태
-					</Text>
-				<input
+				</Text>
+				<SelectBox
+					value={location}
+					onChange={(e) => setLocation(e.target.value)}
+				>
+          <option value="온라인">온라인</option>
+          <option value="오프라인">오프라인</option>
+				</SelectBox>
+				
+				{/* <input
 					type="checkbox"
 						value={is_online}
 						onclick={(e) => setIsOnline(true)}
@@ -214,7 +240,7 @@ const AddPage = (props) => {
 							value={is_online}
 							onClick={(e) => setIsOnline(false)}
 					/>
-					<span>오프라인</span>
+					<span>오프라인</span> */}
 
 				<Text bold size="16" marginTop="20" marginBottom="6">
 					모임기간
@@ -228,7 +254,6 @@ const AddPage = (props) => {
 							minDate={new Date()}
 							placeholderText="📅 시작날짜 선택"
 							startDate={startDate}
-							// endDate={endDate}
 							closeOnScroll={true}
 						/>
 						&nbsp; - &nbsp;
@@ -240,7 +265,6 @@ const AddPage = (props) => {
 							locale={ko}
 							minDate={new Date()}
 							placeholderText="📅 끝나는 날짜 선택"
-							// startDate={startDate}
 							endDate={endDate}
 							closeOnScroll={true}
 						/>
@@ -308,6 +332,53 @@ const TechStackList = styled.ul`
 	height: 50px;
 `;
 
+
+const FilterList = styled.ul`
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    height: auto;
+    transition: height .3s ease-out;
+`;
+
+const FList = styled.li`
+    position: relative;
+    display: block;
+    margin-top: .5rem;
+    font-size: 14px;
+    line-height: 1.5;
+    letter-spacing: -0.009em;
+    :hover {
+        color: #0078FF;
+    }
+`;
+
+const FilterInput = styled.input`
+    pointer-events: none;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    left: 0;
+    margin: 0 0 0 -10px;
+    position: absolute;
+    :checked + label:after{
+        content: '';
+        background: url('https://programmers.co.kr/assets/img-check-light-bcda1ac96cc8d1e2b0a4087aa60ff04b9b15d649a3b4b72a28f8f1112f42827b.png') no-repeat center;
+        background-size: auto;
+        background-size: cover;
+        background-color: #263747;
+        border: 0.35rem solid #263747;
+        border-radius: 0.25rem;
+        width: 0.875rem;
+        height: 0.75rem;
+        display: block;
+        position: absolute;
+        top: 0.1rem;
+        left: 0.05rem;
+    }
+`;
+
 	const List = styled.li`
     position: relative;
     display: inline-block;
@@ -330,6 +401,31 @@ const TechStackList = styled.ul`
     }
 `;
 
+
+const SelectBox = styled.select`
+  padding: 7px 6px;
+  outline: none;
+  border: 1px solid #888;
+  box-sizing: border-box;
+  appearance: none;
+  width: 170px;
+  background: url(${Arrow}) no-repeat 98% 50%;
+  background-size: 22px;
+  background-color: ${props => props.theme.main_gray};
+  font-size: 12px;
+`;
+
+const LanguageInput = styled.input`
+  padding:4px 5px;
+  box-sizing: border-box;
+  outline: none;
+  width:170px;
+  border:1px solid lightgray;
+  border-radius: 3px;
+  &::placeholder{
+    color:#C0C0C0;
+  }
+`;
 
 const SkillInput = styled.input`
 	width: 300px;

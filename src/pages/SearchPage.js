@@ -13,29 +13,8 @@ const SearchPage = (props) => {
 	const [react, setReact] = useState("");
 	const [go, setGo] = useState("");
 
-	// const request = (method, url, data) => {
-	// 	return axios({
-	// 		method,
-	// 		url: config.api,
-	// 		data
-	// 	})
-	// 		.then(response => response.data)
-	// 		.catch(err => {
-	// 			console.log(err);
-	// 	})
-	// }
-
-	// //게시글 리스트 요청하는 함수
-	// export const posts = {
-	// 	fetch() {
-	// 		return request('get', '/study-post');
-	// 	}
-	// }
-
-
 
 	useEffect(() => {
-
 		const fetchGet = async () => {
 			setLoading(true);
 	
@@ -83,10 +62,10 @@ const SearchPage = (props) => {
 					<SearchButton type="submit">검색</SearchButton>
 				</Formgroup>
 
-				<FilterBlock>
+				{/* <FilterBlock>
 					<Button onClick={() => filterPost("react")}>React.js</Button>
 					<Button>Go</Button>
-				</FilterBlock>
+				</FilterBlock> */}
 
 				<PostBlock>
 					{/* {posts.map(post => (
