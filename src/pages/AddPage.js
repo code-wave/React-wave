@@ -297,7 +297,7 @@ const AddBlock = styled.div`
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
-	height: 180vh;
+	height: 150vh;
 `;
 
 const AddWrapper = styled.div`
@@ -306,7 +306,7 @@ const AddWrapper = styled.div`
 	background-color: #fff;
 	border: 2px solid #888;
 	border-radius: 8px;
-	margin-top: 50px;
+	margin-top: 80px;
 `;
 
 const AddHeader = styled.div`

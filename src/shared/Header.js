@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { actionCreators } from "../redux/modules/user";
 import waveLogo from '../assets/image/codewave_logo.png';
 import { Text } from '../elements';
+import '../assets/wave.css';
 
 
 const Header = ({ history }) => {
@@ -48,14 +49,28 @@ const Header = ({ history }) => {
 						<Button onClick={() => history.push('/login')}>로그인</Button>
 				</ButtonBlock>
 			)}
+
+			<div>
+		<svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink"
+		viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto" />
+		<defs>
+		<path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+		</defs>
+		<g class="parallax">
+		<use xlinkHref="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+		<use xlinkHref="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.5)" />
+		<use xlinkHref="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.3)" />
+		<use xlinkHref="#gentle-wave" x="48" y="7" fill="#fff" />
+		</g>
+		</div>
 		</HeaderBlock>
 	);
 };
 
 const HeaderBlock = styled.div`
 	position: relative;
-	width: 100%;
-	height: 12vh;
+	width: 89.35%;
+	height: 15vh;
 	display: flex;
 	justify-content: space-between;
 	border-bottom: 2px solid #c2c1c1;
@@ -98,7 +113,7 @@ const MenuButton = styled.button`
 	font-weight: 700;
   color: #222831;
 	cursor: pointer;
-	margin-right: 5vw;
+	margin-right: 7vw;
 
 	&:last-child {
 		margin-right: 0;

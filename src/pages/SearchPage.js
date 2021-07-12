@@ -68,11 +68,9 @@ const SearchPage = (props) => {
 				</FilterBlock> */}
 
 				<PostBlock>
-					{/* {posts.map(post => (
-						<PostCard post={post} />
-					))} */}
-
-					<PostCard post={posts} />
+					{posts.map(post => (
+						<PostCard key={post.id} post={post} />
+					))}
 
 				</PostBlock>
 			</PostWrapper>

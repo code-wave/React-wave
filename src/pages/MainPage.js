@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { Text } from '../elements';
 import bannerImage from '../assets/image/main_banner.png';
 import PostCard from '../components/board/PostCard';
-import Header from '../shared/Header';
+import Header from '../shared/Header'; 
+import Footer from '../shared/Footer'; 
 import { BsBoxArrowRight } from 'react-icons/bs';
 import { config } from "../shared/config";
 import axios from 'axios';
@@ -21,6 +22,7 @@ const MainPage = ({ history }) => {
 				const API = `${config.api}/study-post/1`;
 				const response = await axios.get(API);
 				setPosts(response.data.study_post);
+				console.log(posts);
 
 			} catch (e) {
 				console.log(e);
@@ -51,7 +53,7 @@ const MainPage = ({ history }) => {
 				</ImageBlock>
 
 					<TextBlock>
-						<Text bold size="36" color="#000" marginBottom="48">
+						<Text bold size="36" color="#000" marginBottom="36">
 							개발자들의 공간, Code Wave
 							</Text>
 						<Text size="18" color="#000">
@@ -62,19 +64,25 @@ const MainPage = ({ history }) => {
 					</TextBlock>
 			</HeaderBlock>
 
-			<AboutBlock>
-				<TextBlock>
-					<Text>
-						CodeWave는 코딩 실력을 높이고 싶은 사람들이
-						함께 모임을 결성하고 각자의 꿈을 이루어 나가기 위해
-						파도와 같이 전진하는 곳입니다.
-					</Text>
-					<Text>
-						
-					</Text>
-				</TextBlock>
+			<BodyBlock>
+				<SearchBlock>
+					<SearchText>
+						원하는 모임을 찾아보세요!
+					</SearchText>
+					
+					<Formgroup>
+						<Input placeholder="키워드 검색" />
+						<SearchButton type="submit">검색</SearchButton>
+					</Formgroup>
+				</SearchBlock>
+
+				<PostBlock>
+					<PostCard key={posts.id} post={posts} />
+				</PostBlock>
 				
-			</AboutBlock>
+				</BodyBlock>
+
+			<Footer />
 		</MainBlock>
 	);
 };
@@ -92,12 +100,13 @@ const HeaderBlock = styled.div`
 	display: flex;
 	justify-content: space-between;
 	padding: 0 150px;
-	padding-top: 70px;
-	padding-bottom: 60px;
+	padding-top: 80px;
+	padding-bottom: 80px;
+	border-bottom: 1px solid #777;
 `;
 
 const ImageBlock = styled.div`
-	width: 400px;
+	width: 380px;
 	height: auto;
 	margin-right: 50px;
 `;
@@ -110,18 +119,33 @@ const MainImage = styled.img`
 const TextBlock = styled.div`
 	width: 550px;
 	margin-top: 20px;
+	margin-left: 20px;
 `;
 
-const AboutBlock = styled.div`
-	position: absolute;
-	top: 400px;
-	width: 80vw;
-	height: 800px;
-	border-top: 1px solid #888;
+const BodyBlock = styled.div`
+	position: relative;
+	height: 185vh;
+`;
+
+const SearchBlock = styled.div`
 	display: flex;
 	flex-direction: column;
-	align-items: center;
-	margin: 60px auto;
+	justify-content: center;
+	margin: 70px auto 50px;
+`;
+
+const SearchText = styled.div`
+	font-size: 28px;
+	font-weight: 700;
+	margin: 0 auto 32px;
+`;
+
+const PostItem = styled.div`
+	width: 250px;
+	height: 250px;
+	border: 1px solid #888;
+	border-radius: 16px;
+	margin-right: 40px;
 `;
 
 const Formgroup = styled.form`

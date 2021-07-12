@@ -298,6 +298,7 @@ const SignupContainer = styled.div`
     width: 100%;
     height: 100vh;
     overflow: hidden;
+    padding-top: 32px;
 `;
 
 const SignupForm = styled.div`
