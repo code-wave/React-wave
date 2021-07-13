@@ -8,7 +8,7 @@ import { SuccessAlert, WarningAlert, ErrorAlert } from "../../shared/Alerts";
 import axios from "axios";
 import { Link } from 'react-router-dom';
 import Header from '../../shared/Header';
-
+import { config } from "../../shared/config";
 
 
 const Signup = (props) => {
@@ -90,32 +90,33 @@ const Signup = (props) => {
         }
     }
 
-    // //checkEmailAPI(username:email)
-    // const checkEmailAPI = (email) => {
+    //checkEmailAPI(username:email)
+    const checkEmailAPI = (email) => {
 
-    //     if (email === '') {
-    //         WarningAlert("이메일을 입력해주세요");
-    //         return false;
-    //     }
+        if (email === '') {
+            WarningAlert("이메일을 입력해주세요");
+            return false;
+        }
 
-    //     const API = `/api/signup/usernamedupchk?username=${email}`;
-    //     axios.post(API,
-    //         {
-    //             username: email,
-    //         })
-    //         .then((res) => {
-    //             if (res.data.msg === "false") {
-    //                 WarningAlert("이미 등록된 이메일입니다.");
-    //                 setEmailDup(false);
-    //             } else {
-    //                 SuccessAlert("사용가능한 이메일입니다.");
-    //                 setEmailDup(true);
-    //             }
-    //         })
-    //         .catch((err) => {
-    //             ErrorAlert(`${err.response.data.msg}`);
-    //         })
-    // }
+        const API = `${config.api}/users/signup`;
+        axios.post(API,
+            {
+                username: email,
+            })
+            .then((res) => {
+                if (res.data.message === "duplicated email") {
+                    WarningAlert("이미 등록된 이메일입니다.");
+                    setEmailDup(false);
+                } else {
+                    SuccessAlert("사용가능한 이메일입니다.");
+                    setEmailDup(true);
+                }
+            })
+            .catch((err) => {
+                console.log(err.response.data);
+                ErrorAlert("중복된 이메일입니다. 다시 입력해주세요.");
+            })
+    }
 
     //checkNicknameAPI
     const checkNicknameAPI = (nickname) => {
@@ -125,14 +126,14 @@ const Signup = (props) => {
             return false;
         }
 
-        const API = `/api/signup/nicknamedupchk?nickname=${nickname}`;
+        const API = `${config.api}/users/signup`;
         axios.post(API,
             {
                 nickname: nickname,
             })
             .then((res) => {
                 
-                if (res.data.msg === "false") {
+                if (res.data.message === "duplicated nickname") {
                     WarningAlert("이미 등록된 닉네임입니다!");
                     setNicknameDup(false);
                 } else {
@@ -141,7 +142,8 @@ const Signup = (props) => {
                 }
             })
             .catch((err) => {
-                ErrorAlert( `${err.response.data.msg}`)
+                console.log(err.response.data);
+                ErrorAlert("중복된 닉네임입니다. 다시 입력해주세요.");
             })
     }
 
@@ -158,10 +160,10 @@ const Signup = (props) => {
             return false;
         }
 
-        // if (emailDup === false) {
-        //     WarningAlert("이메일 중복확인을 해주세요!");
-        //     return false;
-        // }
+        if (emailDup === false) {
+            WarningAlert("이메일 중복확인을 해주세요!");
+            return false;
+        }
 
         if (pw === '') {
             WarningAlert("비밀번호를 입력해주세요!");
@@ -173,10 +175,10 @@ const Signup = (props) => {
             return false;
         }
 
-        // if (nicknameDup === false) {
-        //     WarningAlert("닉네임 중복확인을 해주세요!");
-        //     return false;
-        // }
+        if (nicknameDup === false) {
+            WarningAlert("닉네임 중복확인을 해주세요!");
+            return false;
+        }
 
         if (pw !== pwCheck) {
             WarningAlert("비밀번호 확인이 일치하지 않습니다!");

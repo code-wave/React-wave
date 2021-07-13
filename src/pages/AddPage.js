@@ -30,7 +30,7 @@ const AddPage = (props) => {
 	const [endDate, setEndDate] = useState(null);
 	const [user_id, setUserId] = useState(1);
 	// const [is_online, setIsOnline] = useState(false);
-	const [location, setLocation] = React.useState("온라인");
+	const [location, setLocation] = React.useState(true);
 	const [techStack, setTechStack] = useState("");
 	const [techStackList, setTechStackList] = useState([]);
 	const [color, setColor] = useState("black");
@@ -221,10 +221,12 @@ const AddPage = (props) => {
 				</Text>
 				<SelectBox
 					value={location}
-					onChange={(e) => setLocation(e.target.value)}
+					onChange={(e) => { 
+						if(e.target.value === "true") {
+						setLocation(true)} else {setLocation(false)}}}
 				>
-          <option value="온라인">온라인</option>
-          <option value="오프라인">오프라인</option>
+          <option value="true">온라인</option>
+          <option value="false">오프라인</option>
 				</SelectBox>
 				
 				{/* <input

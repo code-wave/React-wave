@@ -7,6 +7,8 @@ import { history } from "../../redux/configStore";
 import { Link } from "react-router-dom";
 import Header from "../../shared/Header";
 import { WarningAlert } from "../../shared/Alerts";
+import { config } from "../../shared/config";
+
 
 const Login = ({ history }) => {
   const dispatch = useDispatch();

@@ -64,17 +64,8 @@ const loginAPI = (email, pw) => {
           nickname: res.data.user.nickname,
         }
 
-        let token = res.data.access_token.access_token;
-        let expireTime = res.data.access_token.expires_at;
-        // console.log(token, expireTime);
-        setCookie(token, expireTime);
-
         console.log(userInfo);
         dispatch(setUser(userInfo));
-        // let token = res.headers.authorization;
-        // setCookie('token', token);
-
-        // axios.defaults.headers.common['authorization'] = token;
         SuccessAlert("Welcome!");
         // history.replace('/');
       })
@@ -84,12 +75,9 @@ const loginAPI = (email, pw) => {
   }
 }
 
-//현재 로그인한 유저정보API (새로고침해도 유지되게?)
+//현재 로그인한 유저정보API
 const loginCheckAPI = () => {
   return function (dispatch, getState, { history }) {
-
-    // const token = getCookie('token');
-    // axios.defaults.headers.common['authorization'] = token;
 
     const API = `${config.api}/api/mypage/profile`;
     axios({
