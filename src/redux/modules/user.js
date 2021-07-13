@@ -59,18 +59,33 @@ const loginAPI = (email, pw) => {
       .then((res) => {
         console.log(res);
 
+        if(res.data === "wrong email") {
+          ErrorAlert("올바르지 않은 이메일입니다. 다시 입력해 주세요.");
+          return;
+        }
+
+        if(res.data === "wrong password") {
+          ErrorAlert("올바르지 않은 비밀번호입니다. 다시 입력해 주세요.");
+          return;
+        }
+
         const userInfo = {
-          id: res.data.user.id,
-          nickname: res.data.user.nickname,
+          id: res.data.id,
+          email: res.data.email,
+          nickname: res.data.nickname,
         }
 
         console.log(userInfo);
+
         dispatch(setUser(userInfo));
+
         SuccessAlert("Welcome!");
+
         // history.replace('/');
       })
       .catch((err) => {
-        ErrorAlert(`${err.response.data.message}`);
+        console.log(err.response.data);
+        ErrorAlert("이메일 또는 패스워드를 다시 확인해주세요.");
       })
   }
 }
@@ -92,8 +107,6 @@ const loginCheckAPI = () => {
           username: res.data.username, //email
           nowteamcnt: res.data.nowTeamCnt,
           applyteamid: res.data.applyTeamIdList,
-          // description: descriptions,
-          // position: res.data.position,
         }))
       }).catch((err) => {
         console.log('로그인체크에러:', err);
@@ -102,41 +115,41 @@ const loginCheckAPI = () => {
 }
 
 
-//프로필수정하기
-const editProfileAPI = (formData) => {
-  return function (dispatch, getState, { history }) {
-    // const token = getCookie('token');
-    // axios.defaults.headers.common['authorization'] = token;
+// //프로필수정하기
+// const editProfileAPI = (formData) => {
+//   return function (dispatch, getState, { history }) {
+//     // const token = getCookie('token');
+//     // axios.defaults.headers.common['authorization'] = token;
 
-    const API = `${config.api}/api/mypage/profile`
-    axios({
-      method: "put",
-      url: API,
-      data: formData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-        // "authorization": token,
-      },
-    })
-      .then((res) => {
-        SuccessAlert("수정완료")
-        dispatch(setUser({
-          id: res.data.id,
-          nickname: res.data.nickname,
-          profileImage: res.data.profileImage,
-          username: res.data.username, //email
-          // description: res.data.description,
-          // position: res.data.position,
-        }));
+//     const API = `${config.api}/api/mypage/profile`
+//     axios({
+//       method: "put",
+//       url: API,
+//       data: formData,
+//       headers: {
+//         "Content-Type": "multipart/form-data",
+//         // "authorization": token,
+//       },
+//     })
+//       .then((res) => {
+//         SuccessAlert("수정완료")
+//         dispatch(setUser({
+//           id: res.data.id,
+//           nickname: res.data.nickname,
+//           profileImage: res.data.profileImage,
+//           username: res.data.username, //email
+//           // description: res.data.description,
+//           // position: res.data.position,
+//         }));
 
-        //해당 유저의 마이페이지로 이동
-        history.push(`/mypage/${res.data.id}`);
-      })
-      .catch((err) => {
-        console.log("포지션수정 에러" , err);
-        ErrorAlert(`${err.response.data.msg}`);
-      })
-  }
+//         //해당 유저의 마이페이지로 이동
+//         history.push(`/mypage/${res.data.id}`);
+//       })
+//       .catch((err) => {
+//         console.log("포지션수정 에러" , err);
+//         ErrorAlert(`${err.response.data.msg}`);
+//       })
+//   }
 }
 
 const logout = () => {
@@ -154,7 +167,7 @@ const logout = () => {
 export default handleActions(
   {
     [SET_USER]: (state, action) => produce(state, (draft) => {
-      draft.user = action.payload.user;
+      draft.user = action.payload;
       draft.isLogin = true;
     }),
     [LOG_OUT]: (state, action) => produce(state, (draft) => {

@@ -92,7 +92,6 @@ const Signup = (props) => {
 
     //checkEmailAPI(username:email)
     const checkEmailAPI = (email) => {
-
         if (email === '') {
             WarningAlert("이메일을 입력해주세요");
             return false;
@@ -101,10 +100,12 @@ const Signup = (props) => {
         const API = `${config.api}/users/signup`;
         axios.post(API,
             {
-                username: email,
+                email: email,
+                password: pw,
+                nickname: nickname,
             })
             .then((res) => {
-                if (res.data.message === "duplicated email") {
+                if (res.data === "duplicated email") {
                     WarningAlert("이미 등록된 이메일입니다.");
                     setEmailDup(false);
                 } else {
@@ -133,7 +134,7 @@ const Signup = (props) => {
             })
             .then((res) => {
                 
-                if (res.data.message === "duplicated nickname") {
+                if (res.data === "duplicated nickname") {
                     WarningAlert("이미 등록된 닉네임입니다!");
                     setNicknameDup(false);
                 } else {
@@ -160,10 +161,10 @@ const Signup = (props) => {
             return false;
         }
 
-        if (emailDup === false) {
-            WarningAlert("이메일 중복확인을 해주세요!");
-            return false;
-        }
+        // if (emailDup === false) {
+        //     WarningAlert("이메일 중복확인을 해주세요!");
+        //     return false;
+        // }
 
         if (pw === '') {
             WarningAlert("비밀번호를 입력해주세요!");
@@ -175,16 +176,17 @@ const Signup = (props) => {
             return false;
         }
 
-        if (nicknameDup === false) {
-            WarningAlert("닉네임 중복확인을 해주세요!");
-            return false;
-        }
+        // if (nicknameDup === false) {
+        //     WarningAlert("닉네임 중복확인을 해주세요!");
+        //     return false;
+        // }
 
         if (pw !== pwCheck) {
             WarningAlert("비밀번호 확인이 일치하지 않습니다!");
             return false;
         }
 
+        checkEmailAPI(email);
         // history.push('/login');
 
         //회원가입API
@@ -197,7 +199,7 @@ const Signup = (props) => {
 		<React.Fragment>
 			<Header />
 			<Container>
-                <SignupContainer>
+        <SignupContainer>
 					<Title>
 						회원가입
 					</Title>
@@ -212,77 +214,77 @@ const Signup = (props) => {
 											value={email}
 											onChange={(e) => {
 												setEmail(e.target.value)
-                                            }} />
-                                    </td>
-                                    <td>
-                                        <Button width="8vw" margin="12px 16px 0 0" padding="12px" font-size="0.5vw"
-                                            // onClick={() => {
-                                            //     checkEmailAPI(email);
-                                            // }}
-                                            >중복확인
-                                        </Button>
-                                    </td>
-                                    </tr>
-                                    <tr>
-                                        <td>닉네임</td>
-                                        <td>
-                                                <Input width="12vw" margin="4px 12px" padding="12px"
-                                                        maxLength="6"
-                                                        value={nickname}
-                                                        onClick={() => {
-                                                                nickNameInfoUl.current.style.display = "block";
-                                                        }}
-                                                        onChange={(e) => {
-                                                                changeNickname(e, nickNameInfo.current);
-                                                        }} 
-                                                        />
-                                                <InfoUl className="checkPw" ref={nickNameInfoUl}>
-                                                        <li ref={nickNameInfo}>·한글,영문,숫자만 2~6자리 가능</li>
-                                                </InfoUl>
-                                        </td>
-                                        <td>
-                                                <Button width="8vw" margin="12px 16px 0 0" padding="12px" font-size="0.5vw"
-                                                        // onClick={() => {
-                                                        //         checkNicknameAPI(nickname)
-                                                        // }}
-                                                >중복확인</Button></td>
-                                </tr>
-                                <tr>
-                                        <td>비밀번호</td>
-                                        <td>
-                                                <Input width="20vw" margin="4px 12px" padding="12px" type="password"
-                                                        value={pw}
-                                                        onClick={() => {
-                                                                pwInfoUl.current.style.display = "block";
-                                                        }}
-                                                        onChange={(e) => {
-                                                                changePw(e, pwInfoLen.current, pwInfoMatch.current, pwInfoContinuos.current);
-                                                        }} />
-                                                <InfoUl className="checkPw" ref={pwInfoUl}>
-                                                        <li ref={pwInfoLen}>·글자수는 4~20 글자 </li>
-                                                        <li ref={pwInfoMatch}>·영문/숫자만 허용, 2개 이상의 조합</li>
-                                                        <li ref={pwInfoContinuos}>·동일한 문자 3개 이상 연속 사용 불가</li>
-                                                </InfoUl>
-                                        </td>
-                                </tr>
-                                <tr>
-                                        <td>비밀번호확인</td>
-                                        <td>
-                                                <Input width="20vw" margin="4px 12px" padding="12px" type="password"
-                                                        value={pwCheck}
-                                                        onClick={() => {
-                                                                rePwInfoUl.current.style.display = "block";
-                                                        }}
-                                                        onChange={(e) => {
-                                                                changePwMatch(e, rePwInfoUl, rePwInfoLiT)
-                                                        }}
-                                                />
-                                                <InfoUl className="ReCheckPw" ref={rePwInfoUl}>
-                                                        <li ref={rePwInfoLiT}>·비밀번호 일치</li>
-                                                </InfoUl>
-                                        </td>
-                                </tr>
-                    </tbody>
+                      }} />
+                  </td>
+                  <td>
+                      <Button width="8vw" margin="12px 16px 0 0" padding="12px" font-size="0.5vw"
+                          // onClick={() => {
+                          //     checkEmailAPI(email);
+                          // }}
+                          >중복확인
+                      </Button>
+                  </td>
+                </tr>
+                  <tr>
+                      <td>닉네임</td>
+                      <td>
+                              <Input width="12vw" margin="4px 12px" padding="12px"
+                                      maxLength="6"
+                                      value={nickname}
+                                      onClick={() => {
+                                              nickNameInfoUl.current.style.display = "block";
+                                      }}
+                                      onChange={(e) => {
+                                              changeNickname(e, nickNameInfo.current);
+                                      }} 
+                                      />
+                              <InfoUl className="checkPw" ref={nickNameInfoUl}>
+                                      <li ref={nickNameInfo}>·한글,영문,숫자만 2~6자리 가능</li>
+                              </InfoUl>
+                      </td>
+                      <td>
+                              <Button width="8vw" margin="12px 16px 0 0" padding="12px" font-size="0.5vw"
+                                      // onClick={() => {
+                                      //         checkNicknameAPI(nickname)
+                                      // }}
+                              >중복확인</Button></td>
+                  </tr>
+                  <tr>
+                    <td>비밀번호</td>
+                    <td>
+                            <Input width="20vw" margin="4px 12px" padding="12px" type="password"
+                                    value={pw}
+                                    onClick={() => {
+                                            pwInfoUl.current.style.display = "block";
+                                    }}
+                                    onChange={(e) => {
+                                            changePw(e, pwInfoLen.current, pwInfoMatch.current, pwInfoContinuos.current);
+                                    }} />
+                            <InfoUl className="checkPw" ref={pwInfoUl}>
+                                    <li ref={pwInfoLen}>·글자수는 4~20 글자 </li>
+                                    <li ref={pwInfoMatch}>·영문/숫자만 허용, 2개 이상의 조합</li>
+                                    <li ref={pwInfoContinuos}>·동일한 문자 3개 이상 연속 사용 불가</li>
+                            </InfoUl>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>비밀번호확인</td>
+                    <td>
+                            <Input width="20vw" margin="4px 12px" padding="12px" type="password"
+                                    value={pwCheck}
+                                    onClick={() => {
+                                            rePwInfoUl.current.style.display = "block";
+                                    }}
+                                    onChange={(e) => {
+                                            changePwMatch(e, rePwInfoUl, rePwInfoLiT)
+                                    }}
+                            />
+                            <InfoUl className="ReCheckPw" ref={rePwInfoUl}>
+                                    <li ref={rePwInfoLiT}>·비밀번호 일치</li>
+                            </InfoUl>
+                    </td>
+                  </tr>
+                </tbody>
 				</SignupTable>
 				<SignupBtn onClick={signUp} tabIndex="0">회원가입하기</SignupBtn>
 				</SignupForm>
