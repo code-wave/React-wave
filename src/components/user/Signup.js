@@ -2,16 +2,15 @@ import React, { useRef } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from "react-redux";
 import { actionCreators } from "../../redux/modules/user";
-import { nicknameCheck, pwContinuous, pwMatch } from "../../shared/Common";
 import { Container } from "../../elements";
+import { nicknameCheck, pwContinuous, pwMatch } from "../../shared/Common";
 import { SuccessAlert, WarningAlert, ErrorAlert } from "../../shared/Alerts";
 import axios from "axios";
-import { Link } from 'react-router-dom';
 import Header from '../../shared/Header';
 import { config } from "../../shared/config";
 
 
-const Signup = (props) => {
+const Signup = ({ history }) => {
 	const dispatch = useDispatch();
 
     const [email, setEmail] = React.useState("");
@@ -31,7 +30,6 @@ const Signup = (props) => {
 
     //정규식 각 조건에 충족여부에 따라 info 확인 가능하도록
     const changeNickname = (e, nickNameInfo) => {
-
         const targetNickname = e.target.value;
         setNickname(targetNickname);
 
@@ -44,7 +42,7 @@ const Signup = (props) => {
         }
     }
 
-    //비밀번호
+    //비밀번호 설정
     const changePw = (e, pwInfoLen, pwInfoMatch, pwInfoContinuos) => {
 
         const targetPw = e.target.value;
@@ -90,19 +88,17 @@ const Signup = (props) => {
         }
     }
 
-    //checkEmailAPI(username:email)
+    //이메일 중복확인
     const checkEmailAPI = (email) => {
         if (email === '') {
             WarningAlert("이메일을 입력해주세요");
             return false;
         }
 
-        const API = `${config.api}/users/signup`;
+        const API = `${config.api}/users/email-duplicated`;
         axios.post(API,
             {
                 email: email,
-                password: pw,
-                nickname: nickname,
             })
             .then((res) => {
                 if (res.data === "duplicated email") {
@@ -119,15 +115,14 @@ const Signup = (props) => {
             })
     }
 
-    //checkNicknameAPI
+    //닉네임 중복확인
     const checkNicknameAPI = (nickname) => {
-
         if (nickname === '') {
             WarningAlert("닉네임을 입력해주세요");
             return false;
         }
 
-        const API = `${config.api}/users/signup`;
+        const API = `${config.api}/users/nickname-duplicated`;
         axios.post(API,
             {
                 nickname: nickname,
@@ -161,10 +156,10 @@ const Signup = (props) => {
             return false;
         }
 
-        // if (emailDup === false) {
-        //     WarningAlert("이메일 중복확인을 해주세요!");
-        //     return false;
-        // }
+        if (emailDup === false) {
+            WarningAlert("이메일 중복확인을 해주세요!");
+            return false;
+        }
 
         if (pw === '') {
             WarningAlert("비밀번호를 입력해주세요!");
@@ -176,18 +171,17 @@ const Signup = (props) => {
             return false;
         }
 
-        // if (nicknameDup === false) {
-        //     WarningAlert("닉네임 중복확인을 해주세요!");
-        //     return false;
-        // }
+        if (nicknameDup === false) {
+            WarningAlert("닉네임 중복확인을 해주세요!");
+            return false;
+        }
 
         if (pw !== pwCheck) {
             WarningAlert("비밀번호 확인이 일치하지 않습니다!");
             return false;
         }
 
-        checkEmailAPI(email);
-        // history.push('/login');
+        history.push("/login");
 
         //회원가입API
         dispatch(actionCreators.signupAPI(email, pw, nickname));
@@ -218,9 +212,9 @@ const Signup = (props) => {
                   </td>
                   <td>
                       <Button width="8vw" margin="12px 16px 0 0" padding="12px" font-size="0.5vw"
-                          // onClick={() => {
-                          //     checkEmailAPI(email);
-                          // }}
+                          onClick={() => {
+                              checkEmailAPI(email);
+                          }}
                           >중복확인
                       </Button>
                   </td>
@@ -244,9 +238,9 @@ const Signup = (props) => {
                       </td>
                       <td>
                               <Button width="8vw" margin="12px 16px 0 0" padding="12px" font-size="0.5vw"
-                                      // onClick={() => {
-                                      //         checkNicknameAPI(nickname)
-                                      // }}
+                                      onClick={() => {
+                                              checkNicknameAPI(nickname)
+                                      }}
                               >중복확인</Button></td>
                   </tr>
                   <tr>

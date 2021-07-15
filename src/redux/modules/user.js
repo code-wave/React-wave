@@ -33,7 +33,7 @@ const signupAPI = (email, pw, nickname) => {
         let nickname = res.data.nickname;
         let id = res.data.id;
 
-        console.log(nickname, id);
+        // console.log(nickname, id);
         SuccessAlert("회원가입 성공!");
         history.push('/login');
 
@@ -74,14 +74,9 @@ const loginAPI = (email, pw) => {
           email: res.data.email,
           nickname: res.data.nickname,
         }
-
         console.log(userInfo);
 
         dispatch(setUser(userInfo));
-
-        SuccessAlert("Welcome!");
-
-        // history.replace('/');
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -115,41 +110,41 @@ const loginCheckAPI = () => {
 }
 
 
-// //프로필수정하기
-// const editProfileAPI = (formData) => {
-//   return function (dispatch, getState, { history }) {
-//     // const token = getCookie('token');
-//     // axios.defaults.headers.common['authorization'] = token;
+//프로필수정하기
+const editProfileAPI = (formData) => {
+  return function (dispatch, getState, { history }) {
+    // const token = getCookie('token');
+    // axios.defaults.headers.common['authorization'] = token;
 
-//     const API = `${config.api}/api/mypage/profile`
-//     axios({
-//       method: "put",
-//       url: API,
-//       data: formData,
-//       headers: {
-//         "Content-Type": "multipart/form-data",
-//         // "authorization": token,
-//       },
-//     })
-//       .then((res) => {
-//         SuccessAlert("수정완료")
-//         dispatch(setUser({
-//           id: res.data.id,
-//           nickname: res.data.nickname,
-//           profileImage: res.data.profileImage,
-//           username: res.data.username, //email
-//           // description: res.data.description,
-//           // position: res.data.position,
-//         }));
+    const API = `${config.api}/api/mypage/profile`
+    axios({
+      method: "put",
+      url: API,
+      data: formData,
+      headers: {
+        "Content-Type": "multipart/form-data",
+        // "authorization": token,
+      },
+    })
+      .then((res) => {
+        SuccessAlert("수정완료")
+        dispatch(setUser({
+          id: res.data.id,
+          nickname: res.data.nickname,
+          profileImage: res.data.profileImage,
+          username: res.data.username, //email
+          // description: res.data.description,
+          // position: res.data.position,
+        }));
 
-//         //해당 유저의 마이페이지로 이동
-//         history.push(`/mypage/${res.data.id}`);
-//       })
-//       .catch((err) => {
-//         console.log("포지션수정 에러" , err);
-//         ErrorAlert(`${err.response.data.msg}`);
-//       })
-//   }
+        //해당 유저의 마이페이지로 이동
+        history.push(`/mypage/${res.data.id}`);
+      })
+      .catch((err) => {
+        console.log("포지션수정 에러" , err);
+        ErrorAlert(`${err.response.data.msg}`);
+      })
+  }
 }
 
 const logout = () => {

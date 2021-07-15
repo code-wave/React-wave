@@ -22,6 +22,7 @@ const SearchPage = (props) => {
 				const API = `${config.api}/study-posts/limit=3&offset=0`;
 				const response = await axios.get(API);
 				setPosts(response.data.study_posts);
+				console.log(posts);
 
 			} catch (e) {
 				console.log(e);

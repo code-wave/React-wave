@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import { Text } from '../elements';
 import bannerImage from '../assets/image/main_banner.png';
 import PostCard from '../components/board/PostCard';
+import CardDetail from '../pages/CardDetail';
 import Header from '../shared/Header'; 
 import Footer from '../shared/Footer'; 
-import { BsBoxArrowRight } from 'react-icons/bs';
 import { config } from "../shared/config";
 import axios from 'axios';
 
 
-const MainPage = ({ history }) => {
+const MainPage = () => {
 	const [posts, setPosts] = useState(null);
 	const [loading, setLoading] = useState(false);
 
@@ -22,7 +22,7 @@ const MainPage = ({ history }) => {
 				const API = `${config.api}/study-post/1`;
 				const response = await axios.get(API);
 				setPosts(response.data.study_post);
-				console.log(posts);
+				console.log(posts); //배열로 찍혀야 함
 
 			} catch (e) {
 				console.log(e);

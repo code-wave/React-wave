@@ -1,25 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Text } from '../../elements';
-// import Modal from './Modal';
+import { history } from '../../redux/configStore';
 
 
-const Card = ({ post }) => {
-	// const [is_modal, setModal] = React.useState(false);
-	
-	// const openModal = () => {
-	// 	setModal(true);
-	// }
-	// const closeModal = () => {
-	// 	setModal(false);
-	// }
-
+const PostCard = ({ id, post }) => {
 	const skills = post.tech_stack;
-	console.log(skills);
+	// console.log(skills);
 
 	return (
-		<CardBlock>
-			<CardWrapper>
+		<>
+		<CardBlock onClick={() => { history.push(`/detail/${id}`) }}>
 				<Text bold size="25" marginBottom="16px">
 					{post.title}
 				</Text>
@@ -32,26 +23,17 @@ const Card = ({ post }) => {
 					{post.start_date} - {post.end_date}
 				</Text>
 				<Text size="13">{post.content}</Text>
-			</CardWrapper>
-
-			{/* modal창은 모달창을 띄우기 위한 요소와 분리되어 있어야 한다 */}
-				{/* <Modal state={is_modal} close={closeModal} header="Modal heading">
-					모달 팝업창입니다!
-				</Modal> */}
-		</CardBlock>
+			</CardBlock>
+			</>
 	);
 };
 
-Card.defaultProps = {
+PostCard.defaultProps = {
 	color: "#0066ff",
 	border: "1px solid #0066ff",
 };
 
 const CardBlock = styled.div`
-
-`;
-
-const CardWrapper = styled.div`
 	width: 250px;
 	height: 250px;
 	padding: 30px;
@@ -92,4 +74,4 @@ const FilterBtn = styled.span`
 	}
 `;
 
-export default Card;
+export default PostCard;

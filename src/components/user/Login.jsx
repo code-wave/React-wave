@@ -1,14 +1,11 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { actionCreators } from "../../redux/modules/user";
 import { Container } from "../../elements";
-import { history } from "../../redux/configStore";
 import { Link } from "react-router-dom";
 import Header from "../../shared/Header";
 import { WarningAlert } from "../../shared/Alerts";
-import { config } from "../../shared/config";
-
 
 const Login = ({ history }) => {
   const dispatch = useDispatch();

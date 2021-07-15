@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import MainPage from './pages/MainPage';
+import CardDetail from './pages/CardDetail';
 import SearchPage from './pages/SearchPage';
 import Login from './components/user/Login';
 import Signup from './components/user/Signup';
@@ -15,6 +16,7 @@ function App() {
       <div>
         <Switch>
           <Route exact path='/' component={MainPage} />
+          <Route exact path='/detail/:id' component={CardDetail} />
           <Route path='/search' component={SearchPage} />
           <Route path='/login' component={Login} />
           <Route path='/signup' component={Signup} />

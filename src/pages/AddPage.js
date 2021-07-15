@@ -179,33 +179,6 @@ const AddPage = (props) => {
 
 				<LanguageInput type='text' value={techStack} onChange={(e) => setTechStack(e.target.value)} placeholder="React/Go" />
 
-				{/* <TechStackList ref={filter_box}>
-					{techStackList.map(techStack => (
-						<List
-							key={techStack}
-							onClick={AddFilter}
-						>
-							{techStack}
-						</List>
-					))}
-				</TechStackList> */}
-				
-							{/* <SkillInput
-								placeholder="검색"
-								value={inputSkill}
-								onChange={(e) => setInputSkill(e.target.value)}
-								onKeyPress={onKeyPress}
-							/>
-
-							<SkillList ref={skill_box}>
-								{techStack.map((value, index) => (
-									<List key={index}>
-										{value}
-										<DeleteBtn onClick={deleteSkill}>&times;</DeleteBtn>
-									</List>
-								))}
-				</SkillList> */}
-
 				<Text bold size="16" marginTop="20" marginBottom="6">
 					모임정원
 				</Text>
@@ -228,21 +201,6 @@ const AddPage = (props) => {
           <option value="true">온라인</option>
           <option value="false">오프라인</option>
 				</SelectBox>
-				
-				{/* <input
-					type="checkbox"
-						value={is_online}
-						onclick={(e) => setIsOnline(true)}
-					/>
-					<span>온라인</span>
-
-					<Input
-						type="checkbox"
-						height="24"
-							value={is_online}
-							onClick={(e) => setIsOnline(false)}
-					/>
-					<span>오프라인</span> */}
 
 				<Text bold size="16" marginTop="20" marginBottom="6">
 					모임기간
