@@ -63,11 +63,6 @@ const SearchPage = (props) => {
 					<SearchButton type="submit">검색</SearchButton>
 				</Formgroup>
 
-				{/* <FilterBlock>
-					<Button onClick={() => filterPost("react")}>React.js</Button>
-					<Button>Go</Button>
-				</FilterBlock> */}
-
 				<PostBlock>
 					{posts.map(post => (
 						<PostCard key={post.id} post={post} />

@@ -4,13 +4,13 @@ import { Text } from '../../elements';
 import { history } from '../../redux/configStore';
 
 
-const PostCard = ({ id, post }) => {
+const PostCard = ({ post }) => {
 	const skills = post.tech_stack;
-	// console.log(skills);
+	const id = post.id;
 
 	return (
 		<>
-		<CardBlock onClick={() => { history.push(`/detail/${id}`) }}>
+			<CardBlock post={post} onClick={() => { history.push(`/detail/${id}`) }}>
 				<Text bold size="25" marginBottom="16px">
 					{post.title}
 				</Text>

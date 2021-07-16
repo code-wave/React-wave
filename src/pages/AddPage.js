@@ -31,7 +31,8 @@ const AddPage = (props) => {
 	const [user_id, setUserId] = useState(1);
 	// const [is_online, setIsOnline] = useState(false);
 	const [location, setLocation] = React.useState(true);
-	const [techStack, setTechStack] = useState("");
+	const [inputSkill, setInputSkill] = React.useState('');
+	const [techStack, setTechStack] = useState('');
 	const [techStackList, setTechStackList] = useState([]);
 	const [color, setColor] = useState("black");
 
@@ -42,8 +43,10 @@ const AddPage = (props) => {
 				try {
 				const API = `${config.api}/tech-stacks`;
 					const response = await axios.get(API);
-					console.log(response);
-					setTechStackList(response.data.tech_stack);
+					console.log(response.data.tech_stack);
+
+					// setTechStackList(response.data.tech_stack);
+					// console.log(techStackList);
 			} catch (e) {
 				console.log(e);
 			}
@@ -51,28 +54,6 @@ const AddPage = (props) => {
 
 		fetchGetSkills();
 	}, []);
-
-
-	// const PostSkills = async () => {
-	// 	alert(1);
-
-	// 	techStackList.forEach(techStack => {
-	// 		setTechStack(techStack);
-	// 	});
-
-	// 	axios({
-	// 		method: 'post',
-	// 		url: `${config.api}/tech-stack`,
-	// 		data: { 'tech_name' : techStack }
-	// 	}).then(res => {
-	// 		console.log(res.data);
-	// 		alert(res);
-	// 	}).catch(err => {
-	// 		console.log(err.response.data);
-	// 	})
-		
-  //   // history.push("/mypage");
-	// }
 
 	const AddFilter = (e) => {
 		let active = e.target.active;
@@ -89,19 +70,23 @@ const AddPage = (props) => {
 		}
 	};
 
-	// //기술스택 - 엔터 시 기술스택 내용 처리
-	// const onClick = (e) => {
-	// 	const nextStack = techStack.concat(inputSkill);
-	// 	setTechStack(nextStack);
-	// 	setInputSkill('');
-	// }
+	const onChange = (e) => {
+		setInputSkill(e.target.value);
+	}
 
-	// //기술스택 - 엔터치면 아래에 등록
-	// const onKeyPress = (e) => {
-	// 	if (e.key === 'Enter') {
-	// 		onClick();
-	// 	}
-	// }
+	//기술스택 - 엔터 시 기술스택 내용 처리
+	const onClick = (e) => {
+		const nextStack = techStack.concat(inputSkill);
+		setTechStack(nextStack);
+		setInputSkill('');
+	}
+
+	//기술스택 - 엔터치면 아래에 등록
+	const onKeyPress = (e) => {
+		if (e.key === 'Enter') {
+			onClick();
+		}
+	}
 
 	const skill_box = useRef();
 
@@ -143,19 +128,6 @@ const AddPage = (props) => {
     // history.push("/mypage");
 	}
 
-		const GetCategory = (val) => {
-        switch(val){
-            case "react":
-                return "level";
-            case "프로그래밍 언어":
-                return "language";
-            case "문제 모음":
-                return "reference";
-            default:
-                return null;
-        }
-    };
-
 	return (
 		<AddBlock>
 			<Header />
@@ -177,7 +149,11 @@ const AddPage = (props) => {
 						기술스택
 				</Text>
 
-				<LanguageInput type='text' value={techStack} onChange={(e) => setTechStack(e.target.value)} placeholder="React/Go" />
+				{/* <input value={skillInput} onChange={onChange} />
+				<button onKeyPress={onKeyPress}>추가</button>
+				<ul>{skillsList}</ul> */}
+
+				{/* <LanguageInput type='text' value={techStack} onChange={(e) => setTechStack(e.target.value)} placeholder="React/Go" /> */}
 
 				<Text bold size="16" marginTop="20" marginBottom="6">
 					모임정원

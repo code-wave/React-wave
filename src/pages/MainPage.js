@@ -11,7 +11,7 @@ import axios from 'axios';
 
 
 const MainPage = () => {
-	const [posts, setPosts] = useState(null);
+	const [posts, setPosts] = useState([]);
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
@@ -19,10 +19,11 @@ const MainPage = () => {
 			setLoading(true);
 
 			try {
-				const API = `${config.api}/study-post/1`;
+				const API = `${config.api}/study-posts/limit=4&offset=0`;
 				const response = await axios.get(API);
-				setPosts(response.data.study_post);
-				console.log(posts); //배열로 찍혀야 함
+				console.log(response.data.study_posts);
+				setPosts(response.data.study_posts);
+				console.log(posts);
 
 			} catch (e) {
 				console.log(e);
@@ -77,7 +78,9 @@ const MainPage = () => {
 				</SearchBlock>
 
 				<PostBlock>
-					<PostCard key={posts.id} post={posts} />
+					{posts.map(p => (
+						<PostCard key={p.id} post={p} />
+					))}
 				</PostBlock>
 				
 				</BodyBlock>
