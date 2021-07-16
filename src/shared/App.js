@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import MainPage from './pages/MainPage';
-import CardDetail from './pages/CardDetail';
-import SearchPage from './pages/SearchPage';
-import Login from './components/user/Login';
-import Signup from './components/user/Signup';
-import AddPage from './pages/AddPage';
-import ErrorPage from './pages/ErrorPage';
-import Mypage from './components/user/Mypage';
+import MainPage from '../pages/MainPage';
+import CardDetail from '../pages/CardDetail';
+import SearchPage from '../pages/SearchPage';
+import Login from '../components/user/Login';
+import Signup from '../components/user/Signup';
+import AddPage from '../pages/AddPage';
+import ErrorPage from '../pages/ErrorPage';
+import Mypage from '../components/user/Mypage';
 
 
 function App() {
