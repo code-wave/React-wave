@@ -59,9 +59,8 @@ const HeaderBlock = styled.div`
 	height: 15vh;
 	display: flex;
 	justify-content: space-between;
-	border-bottom: 2px solid #c2c1c1;
-	box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.3);
 	padding: 0 90px;
+	margin-bottom: 32px;
 `;
 
 const LogoBlock = styled.button`

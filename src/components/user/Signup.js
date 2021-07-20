@@ -355,10 +355,6 @@ const Title = styled.div`
     padding:20px 10px;
     margin-top: 40px;
     text-align: center;
-    box-shadow: 0 0 2px 0 rgba(216, 216, 216, 0.86);
-    background-color: #f2f5fa;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
     box-sizing:border-box;
     font-size: 1.3vw;
     font-weight: 700;
@@ -385,7 +381,7 @@ const Button = styled.button`
     color: #ffffff;
     border:none;
     border-radius: 8.5px;
-    background-color:#999cda;
+    background-color:#2a89c0;
     font-size: 9px;
     &:hover{
         cursor: pointer;
@@ -397,19 +393,17 @@ const Button = styled.button`
 `;
 
 const SignupBtn = styled.div`
-    width:150px;
+    width:250px;
     margin: 20px auto;
     padding: 12px;
-    border: 1px solid grey;
     border-radius: 4px;
-    background-color: #ffffff;
+    background-color: #90ace0;
     letter-spacing: 0.5px;
     font-size: 14px;
     font-weight: 700;
     text-align:center;
-    &:hover{
-        cursor: pointer;
-    }
+    color: #fff;
+    cursor: pointer;
 `;
 
 

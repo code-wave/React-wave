@@ -68,12 +68,12 @@ const Login = ({ history }) => {
               </tbody>
             </LoginTable>
             <LoginBtn onClick={onLogin}>로그인</LoginBtn>
-            <Link to="/signup">
-              <ToSignup>
-                <span>아직 회원이 아니신가요?</span>
+            <ToSignup>
+              <span>아직 회원이 아니신가요?</span>&nbsp;&nbsp;
+              <Link to="/signup">
                 <span>지금 바로 가입해보세요!</span>
-              </ToSignup>
-            </Link>
+              </Link>
+            </ToSignup>
           </LoginForm>
         </LoginContainer>
       </Container>
@@ -133,10 +133,6 @@ const Title = styled.div`
   margin-top: 70px;
   padding: 20px 10px;
   text-align: center;
-  box-shadow: 0 0 2px 0 rgba(216, 216, 216, 0.86);
-  background-color: #f2f5fa;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
   box-sizing: border-box;
   font-size: 1.3vw;
   font-weight: 700;
@@ -165,20 +161,19 @@ const Input = styled.input`
 `;
 
 const LoginBtn = styled.div`
-  width: 100px;
+  width: 200px;
   margin: 20px auto 50px;
   padding: 12px;
-  border: 1px solid grey;
   border-radius: 4px;
-  background-color: #ffffff;
+  background-color: #90ace0;
   letter-spacing: 0.5px;
   font-size: 16px;
   font-weight: 700;
   text-align: center;
   box-sizing: border-box;
-  &:hover {
-    cursor: pointer;
-  }
+  color: #fff;
+  cursor: pointer;
+
   @media ${(props) => props.theme.tablet} {
     font-size: 12px;
   }

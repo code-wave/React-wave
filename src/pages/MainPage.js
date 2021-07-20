@@ -106,6 +106,7 @@ const HeaderBlock = styled.div`
 	padding-top: 80px;
 	padding-bottom: 80px;
 	border-bottom: 1px solid #777;
+	margin-top: 50px;
 `;
 
 const ImageBlock = styled.div`
@@ -121,7 +122,7 @@ const MainImage = styled.img`
 
 const TextBlock = styled.div`
 	width: 550px;
-	margin-top: 20px;
+	margin-top: 30px;
 	margin-left: 20px;
 `;
 
@@ -134,6 +135,7 @@ const SearchBlock = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+	align-items: center;
 	margin: 70px auto 50px;
 `;
 
@@ -166,6 +168,10 @@ const Input = styled.input`
 	margin-right: 8px;
 	padding: 4px 10px;
 	font-size: 16px;
+
+	&:active {
+		border: none;
+	}
 `;
 
 const SearchButton = styled.button`

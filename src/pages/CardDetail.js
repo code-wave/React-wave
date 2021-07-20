@@ -16,8 +16,8 @@ import { WarningAlert } from "../shared/Alerts";
 const TeamDetail = (props) => {
 
   const dispatch = useDispatch();
-  const id = props.match.params.teamId;
-  const team = useSelector((state) => state.team.teamInfo);
+  // const id = props.match.params.teamId;
+  // const team = useSelector((state) => state.team.teamInfo);
   const user = useSelector((state) => state.user.user);
   const isLogin = useSelector((state) => state.user.isLogin);
 //   const descriptions  = team.leader.description
@@ -40,10 +40,10 @@ const TeamDetail = (props) => {
       return false;
     }
 
-    if (user?.applyteamid.some(t => t === Number(id))) {
-      WarningAlert("이미 지원한 게시글입니다.")
-      return false;
-    }
+    // if (user?.applyteamid.some(t => t === Number(id))) {
+    //   WarningAlert("이미 지원한 게시글입니다.")
+    //   return false;
+    // }
 
     setModalOpen(true);
   }
@@ -108,7 +108,7 @@ const TeamDetail = (props) => {
     <React.Fragment>
       <div>
         <TitleBox>
-          <Title>[프로젝트] {team.title}</Title>
+          {/* <Title>[프로젝트] {team.title}</Title> */}
           {/* <Date>{calcTime(team?.createdAt)}</Date> */}
 
         </TitleBox>
@@ -137,18 +137,19 @@ const TeamDetail = (props) => {
                   </React.Fragment> */}
                     <LeaderInfoTop>
                       <LeaderInfoText onClick={()=>{ 
-                        isLogin ? (
-                          history.push(`/userpage/${team?.leader?.id}`)
-                          ) : (
+                        // isLogin ? (
+                          // history.push(`/userpage/${team?.leader?.id}`)
+                      // ) : 
+                      (
                             WarningAlert(
                               "로그인 후 사용해주세요😘",
                               '<a href="http://demoim.co.kr/login" style="text-decoration:none">로그인하러 가기</a>')
                             )}} className="nickname">
-                        {team?.leader?.nickname}
+                        {/* {team?.leader?.nickname} */}
                       </LeaderInfoText>
                       <LeaderInfoText className="position">
                         <span>
-                          {team?.leader?.position}
+                          {/* {team?.leader?.position} */}
                         </span>
                       </LeaderInfoText>
 										</LeaderInfoTop>
@@ -162,13 +163,13 @@ const TeamDetail = (props) => {
             </LeaderInnerBox>
           </LeaderBox>
           <TeamPostBox>
-            {team?.leader?.id === user?.id &&
+            {/* {team?.leader?.id === user?.id &&
               (<LeaderMenu>
                 {team.recruitState !== "FINISHED" && (
                   <LeaderBtn onClick={() => history.push(`/team/edit/${id}`)}>수정</LeaderBtn>
-                )}
+                )} */}
                 {/* <LeaderBtn onClick={() => dispatch(teamActions.deleteTeamMakingAPI(team.teamId))}>삭제</LeaderBtn> */}
-              </LeaderMenu>)}
+              {/* </LeaderMenu>)} */}
             <ContentInnerBox>
               <InfoBox>
                 <InfoText>
@@ -179,29 +180,22 @@ const TeamDetail = (props) => {
                   <ProjectTitle><span>프로젝트 기간</span></ProjectTitle>
                   {/* <ProjectPeriod>{projectBegin}~{projectEnd}</ProjectPeriod> */}
                 </ProjectBox>
-                <MemberBox>
-                  <MemberTitle><span>인원</span></MemberTitle>
-                  <MemberPosition>
-                  {team.front !== 0 && `프론트엔드 ${team.front}명 `}
-                  {team.back !== 0 && `백엔드 ${team.back}명 `}
-                  {team.designer !== 0 && `디자이너 ${team.designer}명 `}
-                  {team.planner !== 0 && `기획자 ${team.planner}명 `}
-                  </MemberPosition>
-                </MemberBox>
                 <InfoText>
-                  <span>언어</span> {team.stack}
+                  <span>언어</span>
+                  {/* {team.stack} */}
                 </InfoText>
                 <InfoText>
-                  <span>장소</span> {team.location}
+                  <span>장소</span>
+                  {/* {team.location} */}
                 </InfoText>
               </InfoBox>
-              <ProjectCotentsBox dangerouslySetInnerHTML={{ __html: team.contents }} />
+              {/* <ProjectCotentsBox dangerouslySetInnerHTML={{ __html: team.contents }} /> */}
             </ContentInnerBox>
           </TeamPostBox>
         </ContentBox>
         <ModalBox>
-          {team?.leader?.id !== user?.id || user === null ? (
-            team.recruitState === "ACTIVATED" ?
+          {/* {team?.leader?.id !== user?.id || user === null ? ( */}
+            {/* team.recruitState === "ACTIVATED" ? */}
               (<React.Fragment>
                 <ModalButton onClick={openModal}>지원하기</ModalButton>
                 <Modal open={modalOpen} close={closeModal} header="📢 지원서 보내기" _onClick={applyTeam} clickName="지원신청">
@@ -214,7 +208,7 @@ const TeamDetail = (props) => {
                   </main>
                 </Modal>
               </React.Fragment>) : (
-                <RecruitFinishBtn>모집완료</RecruitFinishBtn>)) : ('')}
+                {/* <RecruitFinishBtn>모집완료</RecruitFinishBtn>)) : ('')} */}
         </ModalBox>
 
         {/* {(team?.leader?.id === user?.id && team?.recruitState === "ACTIVATED") && (

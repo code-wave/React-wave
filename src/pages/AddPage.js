@@ -31,7 +31,7 @@ const AddPage = (props) => {
 	const [user_id, setUserId] = useState(1);
 	// const [is_online, setIsOnline] = useState(false);
 	const [location, setLocation] = React.useState(true);
-	const [inputSkill, setInputSkill] = React.useState('');
+	const [skillInput, setSkillInput] = React.useState('');
 	const [techStack, setTechStack] = useState('');
 	const [techStackList, setTechStackList] = useState([]);
 	const [color, setColor] = useState("black");
@@ -45,7 +45,7 @@ const AddPage = (props) => {
 					const response = await axios.get(API);
 					console.log(response.data.tech_stack);
 
-					// setTechStackList(response.data.tech_stack);
+					setTechStackList(response.data.tech_stack);
 					// console.log(techStackList);
 			} catch (e) {
 				console.log(e);
@@ -71,14 +71,14 @@ const AddPage = (props) => {
 	};
 
 	const onChange = (e) => {
-		setInputSkill(e.target.value);
+		setSkillInput(e.target.value);
 	}
 
 	//기술스택 - 엔터 시 기술스택 내용 처리
 	const onClick = (e) => {
-		const nextStack = techStack.concat(inputSkill);
+		const nextStack = techStack.concat(skillInput);
 		setTechStack(nextStack);
-		setInputSkill('');
+		setSkillInput('');
 	}
 
 	//기술스택 - 엔터치면 아래에 등록
@@ -97,8 +97,6 @@ const AddPage = (props) => {
 	}
 
 	const fetchPost = async () => {
-		// alert(1);
-
 		const requestBody = {
 				title: title,
 				content: content,
@@ -106,7 +104,6 @@ const AddPage = (props) => {
 				start_date: startDate,
 				end_date: endDate,
 				user_id: user_id,
-				// is_online: is_online,
 				is_online: location,
 				tech_stack: techStack
 			}
@@ -145,15 +142,15 @@ const AddPage = (props) => {
 					onChange={(e) => setTitle(e.target.value)}
 					/>
 					
-					<Text bold size="16"  marginTop="20" marginBottom="6">
-						기술스택
+				<Text bold size="16"  marginTop="20" marginBottom="6">
+					기술스택
 				</Text>
 
-				{/* <input value={skillInput} onChange={onChange} />
+				<input value={skillInput} onChange={onChange} />
 				<button onKeyPress={onKeyPress}>추가</button>
-				<ul>{skillsList}</ul> */}
+				<ul>{techStackList}</ul>
 
-				{/* <LanguageInput type='text' value={techStack} onChange={(e) => setTechStack(e.target.value)} placeholder="React/Go" /> */}
+				<LanguageInput type='text' value={techStack} onChange={(e) => setTechStack(e.target.value)} placeholder="React/Go" />
 
 				<Text bold size="16" marginTop="20" marginBottom="6">
 					모임정원
@@ -238,23 +235,21 @@ const AddBlock = styled.div`
 
 const AddWrapper = styled.div`
 	width: 640px;
-	padding: 40px 50px 0;
+	padding: 30px 50px 0;
 	background-color: #fff;
-	border: 2px solid #888;
+	border: 2px solid #b4b4b4;
 	border-radius: 8px;
-	margin-top: 80px;
+	margin-top: 60px;
 `;
 
 const AddHeader = styled.div`
-	margin-bottom: 40px;
 	width: 80%;
 	height: auto;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	padding-bottom: 18px;
-	margin: 0 auto 42px;
+	margin: 0 auto 40px;
 	border-bottom: 1px solid #999;
 `;
 
