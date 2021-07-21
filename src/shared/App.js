@@ -16,7 +16,6 @@ function App() {
       <div>
         <Switch>
           <Route exact path='/' component={MainPage} />
-          <Route exact path='/detail/:id' component={CardDetail} />
           <Route path='/search' component={SearchPage} />
           <Route path='/login' component={Login} />
           <Route path='/signup' component={Signup} />

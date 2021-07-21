@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Text } from '../../elements';
 import { history } from '../../redux/configStore';
+import { withRouter } from 'react-router-dom';
 import { Link } from "react-router-dom";
 
 
@@ -11,7 +12,7 @@ const PostCard = ({ post }) => {
 
 	return (
 		<>
-			<CardBlock post={post} onClick={() => { history.replace(`/detail/${id}`) }}>
+			<CardBlock post={post} onClick={() => { history.push(`detail/${id}`) }}>
 				<Text bold size="25" marginBottom="16px">
 					{post.title}
 				</Text>
@@ -75,4 +76,4 @@ const FilterBtn = styled.span`
 	}
 `;
 
-export default PostCard;
+export default withRouter(PostCard);

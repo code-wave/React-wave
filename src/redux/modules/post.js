@@ -46,8 +46,6 @@ const initialState = {
     thumbnail: "https://images.unsplash.com/photo-1542181961-9590d0c79dab?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80",
     front: 0,
     back: 0,
-    designer: 0,
-    planner: 0,
     stack: "",
     contents: "",
     recruitState: "",

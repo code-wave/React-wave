@@ -8,6 +8,8 @@ import Header from '../shared/Header';
 import Footer from '../shared/Footer'; 
 import { config } from "../shared/config";
 import axios from 'axios';
+// import { withRouter } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 
 
 const MainPage = () => {
@@ -82,10 +84,10 @@ const MainPage = () => {
 						<PostCard key={p.id} post={p} />
 					))}
 				</PostBlock>
-				
 				</BodyBlock>
-
 			<Footer />
+
+			<Route exact path="/detail/:id" component={CardDetail} />
 		</MainBlock>
 	);
 };
