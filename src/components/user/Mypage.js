@@ -2,15 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import Header from '../../shared/Header';
 import { Text } from '../../elements';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const Mypage = (props) => {
+	const dispatch = useDispatch();
+	const userInfo = useSelector((state) => state.user.user.user); //isLogin 여부와 user 객체를 받아옴 (user 객체 안에 user: {email: ..., id: ..., nickname: ...})
+	const isLogin = useSelector((state) => state.user.isLogin);
+	console.log(userInfo);
+	console.log(isLogin);
+
+
 	return (
 		<MypageBlock>
 			<Header />
 
 			<MyPageWrapper>
-				
 				<InfoHeader>
 					<Text bold size="18" marginBottom="16">
 						회원정보 수정
@@ -18,30 +25,21 @@ const Mypage = (props) => {
 				</InfoHeader>
 				
 				<UserInfoBlock>
-					<ProfileImage>
-						<Image />
-						<ImageChangeBtn>
-							프로필이미지 수정
-						</ImageChangeBtn>
-					</ProfileImage>
-			
 					<UserInfo>
 					<UserInfoHeader>
-						<Text size="20" bold>CodeWave</Text>
+							<Text size="20" bold>Hello It's Code Wave!</Text>
 						<InfoChangeBtn>회원정보 수정</InfoChangeBtn>
 					</UserInfoHeader>
 						
 					<UserInfoBody>
 						<table>
 							<tr>
-								<td><Text size="14" bold marginBottom="16">이메일</Text></td>
-								<td>
-									codewave@gmail.com
-								</td>
+								<td><Text size="14" bold marginBottom="16">닉네임</Text></td>
+								<td>{userInfo.nickname}</td>
 							</tr>
 							<tr>
-								<td><Text size="14" bold marginBottom="16">닉네임</Text></td>
-								<td>코드웨이브</td>
+								<td><Text size="14" bold marginBottom="16">이메일</Text></td>
+								<td>{userInfo.email}</td>
 							</tr>
 						</table>
 					</UserInfoBody>

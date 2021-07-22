@@ -57,7 +57,7 @@ const loginAPI = (email, pw) => {
       },
     })
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
 
         if(res.data === "wrong email") {
           ErrorAlert("올바르지 않은 이메일입니다. 다시 입력해 주세요.");
@@ -70,9 +70,9 @@ const loginAPI = (email, pw) => {
         }
 
         const userInfo = {
-          id: res.data.id,
-          email: res.data.email,
-          nickname: res.data.nickname,
+          id: res.data.user.id,
+          email: res.data.user.email,
+          nickname: res.data.user.nickname,
         }
         console.log(userInfo);
 
@@ -98,7 +98,6 @@ const loginCheckAPI = () => {
         dispatch(setUser({
           id: res.data.userid,
           nickname: res.data.nickname,
-          profileImage: res.data.profileImage,
           username: res.data.username, //email
           nowteamcnt: res.data.nowTeamCnt,
           applyteamid: res.data.applyTeamIdList,
@@ -113,28 +112,17 @@ const loginCheckAPI = () => {
 //프로필수정하기
 const editProfileAPI = (formData) => {
   return function (dispatch, getState, { history }) {
-    // const token = getCookie('token');
-    // axios.defaults.headers.common['authorization'] = token;
-
     const API = `${config.api}/api/mypage/profile`
     axios({
       method: "put",
       url: API,
-      data: formData,
-      headers: {
-        "Content-Type": "multipart/form-data",
-        // "authorization": token,
-      },
     })
       .then((res) => {
         SuccessAlert("수정완료")
         dispatch(setUser({
           id: res.data.id,
           nickname: res.data.nickname,
-          profileImage: res.data.profileImage,
-          username: res.data.username, //email
-          // description: res.data.description,
-          // position: res.data.position,
+          email: res.data.email, 
         }));
 
         //해당 유저의 마이페이지로 이동
@@ -149,10 +137,6 @@ const editProfileAPI = (formData) => {
 
 const logout = () => {
   return function (dispatch, getState, { history }) {
-    // deleteCookie('token');
-    axios.defaults.headers.common['Authorization'] = null;
-    delete axios.defaults.headers.common['Authorization'];
-    SuccessAlert("See you soon")
     dispatch(logOut());
     history.replace('/');
   }

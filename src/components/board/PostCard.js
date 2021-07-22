@@ -12,7 +12,7 @@ const PostCard = ({ post }) => {
 
 	return (
 		<>
-			<CardBlock post={post} onClick={() => { history.push(`detail/${id}`) }}>
+			<CardBlock post={post} onClick={() => { window.location.replace(`detail/${id}`) }}>
 				<Text bold size="25" marginBottom="16px">
 					{post.title}
 				</Text>

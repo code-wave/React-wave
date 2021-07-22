@@ -87,7 +87,6 @@ const MainPage = () => {
 				</BodyBlock>
 			<Footer />
 
-			<Route exact path="/detail/:id" component={CardDetail} />
 		</MainBlock>
 	);
 };
@@ -105,7 +104,7 @@ const HeaderBlock = styled.div`
 	display: flex;
 	justify-content: space-between;
 	padding: 0 150px;
-	padding-top: 80px;
+	padding-top: 40px;
 	padding-bottom: 80px;
 	border-bottom: 1px solid #777;
 	margin-top: 50px;
