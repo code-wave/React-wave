@@ -1,18 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-// import SearchPlace from './SearchPlace';
-import { useDispatch } from "react-redux";
-// import { actionCreators } from "../redux/modules/post";
-import { Text, Input, Checkbox } from '../elements';
+import { Text } from '../elements';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/esm/locale';
 import Header from '../shared/Header';
-import { WarningAlert } from "../shared/Alerts";
 import { config } from '../shared/config';
 import axios from 'axios';
-import API from '../shared/config';
 import Arrow from '../assets/image/arrow.jpg';
+import "../assets/searchbar.css";
 
 
 const TagItem = ({ tag, onRemove }) => (
@@ -33,7 +29,6 @@ const TagList = ({ tags, onRemove }) => (
 );
 
 const AddPage = (props) => {
-	const dispatch = useDispatch();
 	const { history } = props;
 
 	//회원 기입사항
@@ -44,56 +39,77 @@ const AddPage = (props) => {
 	const [endDate, setEndDate] = useState(null);
 	const [user_id, setUserId] = useState(1);
 	const [location, setLocation] = React.useState(true);
-	const [input, setInput] = useState('');
-	const [localTags, setLocalTags] = useState([]);
 
+	const [skillName, setSkillName] = useState([
+		"React", "Go", "Java", "React native", "Javascript",
+	]);
+	const [input, setInput] = useState('');
+	const [results, setResults] = useState([]);
+	const [localTags, setLocalTags] = useState([]);
+	
+
+	const matchName = (name, keyword) => {
+		console.log(keyword);
+		var keyLen = keyword.length;
+		
+		name = name.toLowerCase().substring(0, keyLen);
+		console.log(name);
+
+    if (keyword === "") return false;
+    return name === keyword;
+  };
+
+	const onChange = text => {
+		setInput(text);
+		console.log(text);
+
+		let nameArr = skillName.filter(item => true === matchName(item, text));
+		console.log(nameArr);
+
+		setResults(nameArr);
+		console.log(results);
+  };
+
+	// 태그 삭제
 		const onRemove = (tag) => {
 		setLocalTags(localTags.filter(t => t !== tag));
 	};
-	
-	const onChange = (e) => {
-		setInput(e.target.value);
-		// console.log(input)
-	}
 
-	const onSubmit = (e) => {
-		e.preventDefault();
-		// console.log(input);
-		insertTag(input);
-		onReset();
-	}
-
-	const inputRef = useRef();
-
-	const onReset = () => {
-		setInput("");
-		inputRef.current.focus();
-	}
-
-		const insertTag = (tag) => {
-		// console.log(tag);
+	//태그 추가
+	const insertTag = (tag) => {
 		if (!tag) return;
 		if (localTags.includes(tag)) return;
 			setLocalTags([...localTags, tag]);
-			onReset();
 	};
 
-	// 기술스택 - 백엔드에서 받아오기
-	// useEffect(() => {
-	// 	//렌더링 되자마자 서버에서 tech_stack 리스트를 받아옴
-	// 	const fetchGetSkills = async () => {
-	// 		try {
-	// 			const API = `${config.api}/tech-stacks`;
-	// 			const response = await axios.get(API);
-	// 			setTechStackList(response.data.tech_stack);
-	// 			console.log(techStackList);
-	// 		} catch (e) {
-	// 			console.log(e);
-	// 		}
-	// 	}
+	const updateText = text => {
+		//태그 추가 함수
+		insertTag(text);
+		//input창  초기화
+		setInput("");
+		//preview 항목 초기화
+    setResults([]);
+  };
 
-	// 	fetchGetSkills();
-	// }, []);
+	const cancelSearch = () => {
+		//input창 초기화
+    setInput("");
+  };
+
+  const renderResults = results.map((result, index) => {
+    return (
+			<div
+			key={index}
+      onClick={() => updateText(result)}
+      className={`search-preview ${index === 0 ? "start" : ""}`}>
+      <div className="first">
+        <p className="name">{result}</p>
+      </div>
+    </div>
+    );
+  });
+
+
 
 	//작성된 내용들을 백엔드로 보내기
 	const fetchPost = async () => {
@@ -148,9 +164,23 @@ const AddPage = (props) => {
 				</Text>
 
 				<TagBoxBlock>
-					<TagForm onSubmit={onSubmit}>
-						<input placeholder="기술스택을 입력하세요." value={input} onChange={onChange} ref={inputRef} />
-						<button type="submit">추가</button>
+					<TagForm className="auto">
+						<input
+							className="search-bar"
+							placeholder="Search"
+							value={input}
+							onChange={e => onChange(e.target.value)}
+						/>
+						{/* <button
+							onClick={() => cancelSearch()}
+							className={`cancel-btn ${input.length > 0 ? "active" : "inactive"}`}
+						>
+							x
+						</button> */}
+
+						{results.length > 0 ? (
+							<div className="search-results">{renderResults}</div>
+						) : null}
 					</TagForm>
 					<TagList tags={localTags} onRemove={onRemove} />
 				</TagBoxBlock>
@@ -229,6 +259,7 @@ const AddPage = (props) => {
 	);
 };
 
+
 const AddBlock = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -268,25 +299,25 @@ const TagBoxBlock = styled.div`
 
 const TagForm = styled.form`
 	border-radius: 4px;
-	overflow: hidden;
+	/* overflow: hidden; */
 	display: flex;
-	width: 256px;
-	border: 1px solid #888;
+	width: 300px;
+	/* border: 1px solid #888; */
 
-	input,
+	/* input,
 	button {
 		outline: none;
 		border: none;
 		font-size: 1rem;
-	}
+	} */
 
-	input {
+	/* input {
 		padding: 8px;
 		flex: 1;
 		min-width: 0;
-	}
+	} */
 
-	button {
+	/* button {
 		cursor: pointer;
 		padding: 0 16px;
 		border: none;
@@ -297,7 +328,7 @@ const TagForm = styled.form`
 		&:hover {
 			background: #76b6ff;
 		}
-	}
+	} */
 `;
 
 const Tag = styled.div`
@@ -319,7 +350,7 @@ const Tag = styled.div`
 
 const TagListBlock = styled.div`
 	display: flex;
-	margin-top: 8px;
+	margin-top: 30px;
 `;
 
 const SelectBox = styled.select`
