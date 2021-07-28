@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import styled from 'styled-components';
 import { Text } from '../elements';
 import DatePicker from 'react-datepicker';
@@ -9,6 +9,8 @@ import { config } from '../shared/config';
 import axios from 'axios';
 import Arrow from '../assets/image/arrow.jpg';
 import "../assets/searchbar.css";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 
 const TagItem = ({ tag, onRemove }) => (
@@ -30,6 +32,7 @@ const TagList = ({ tags, onRemove }) => (
 
 const AddPage = (props) => {
 	const { history } = props;
+	const quillRef = useRef();
 
 	//회원 기입사항
 	const [title, setTitle] = useState('');
@@ -91,11 +94,6 @@ const AddPage = (props) => {
     setResults([]);
   };
 
-	const cancelSearch = () => {
-		//input창 초기화
-    setInput("");
-  };
-
   const renderResults = results.map((result, index) => {
     return (
 			<div
@@ -108,8 +106,6 @@ const AddPage = (props) => {
     </div>
     );
   });
-
-
 
 	//작성된 내용들을 백엔드로 보내기
 	const fetchPost = async () => {
@@ -140,6 +136,34 @@ const AddPage = (props) => {
 		
 		history.push("/mypage");
 	}
+
+	const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          ["bold", "italic", "underline", "strike", "blockquote"],
+          [{ size: ["small", false, "large", "huge"] }, { color: [] }],
+          [
+            { list: "ordered" },
+            { list: "bullet" },
+            { indent: "-1" },
+            { indent: "+1" },
+          ],
+        ],
+      },
+    }),
+    []
+	);
+	
+	const formats = [
+        //'font',
+        'header',
+        'bold', 'italic', 'underline', 'strike', 'blockquote',
+        'list', 'bullet', 'indent',
+        'link', 'image',
+        'align', 'color', 'background',        
+      ]
+
 	
 	
 	return (
@@ -171,12 +195,6 @@ const AddPage = (props) => {
 							value={input}
 							onChange={e => onChange(e.target.value)}
 						/>
-						{/* <button
-							onClick={() => cancelSearch()}
-							className={`cancel-btn ${input.length > 0 ? "active" : "inactive"}`}
-						>
-							x
-						</button> */}
 
 						{results.length > 0 ? (
 							<div className="search-results">{renderResults}</div>
@@ -238,13 +256,19 @@ const AddPage = (props) => {
 
 					<Text bold size="16" marginTop="20" marginBottom="4">
 						모임 상세정보
-					</Text>
-					<textarea
-								placeholder="모임에 대한 상세한 정보를 입력해 주세요."
-								value={content}
-								onChange={(e) => setContent(e.target.value)}
-								rows="7" cols="80"
-						/>
+				</Text>
+
+				<ReactQuill
+					style={{ height: "400px", overflow: "scroll"}}
+						ref={quillRef}
+						id="editor"
+						placeholder="모임에 대한 상세한 정보를 입력해 주세요."
+						value={content || ''}
+						onChange={(content, delta, source, editor) => setContent(editor.getHTML())}
+						modules={modules}
+						formats={formats}
+						theme="snow"
+				/>
 
 				<ButtonGrid>
 					<AddButton
@@ -299,36 +323,8 @@ const TagBoxBlock = styled.div`
 
 const TagForm = styled.form`
 	border-radius: 4px;
-	/* overflow: hidden; */
 	display: flex;
 	width: 300px;
-	/* border: 1px solid #888; */
-
-	/* input,
-	button {
-		outline: none;
-		border: none;
-		font-size: 1rem;
-	} */
-
-	/* input {
-		padding: 8px;
-		flex: 1;
-		min-width: 0;
-	} */
-
-	/* button {
-		cursor: pointer;
-		padding: 0 16px;
-		border: none;
-		background: #0078ff;
-		color: white;
-		font-weight: bold;
-
-		&:hover {
-			background: #76b6ff;
-		}
-	} */
 `;
 
 const Tag = styled.div`
