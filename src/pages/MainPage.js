@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Text } from '../elements';
+import { Text, Loader } from '../elements';
 import bannerImage from '../assets/image/main_banner.png';
 import PostCard from '../components/board/PostCard';
 import CardDetail from '../pages/CardDetail';
@@ -38,7 +38,9 @@ const MainPage = () => {
 	}, []);
 
 	if (loading) {
-		return <MainBlock>대기 중...</MainBlock>
+		return (
+				<Loader type="spin" color="#2581d6" message={"Loading 중..."} />
+		);
 	}
 
 	if (!posts) {

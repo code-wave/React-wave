@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Header from '../shared/Header';
 import Footer from '../shared/Footer';
+import '../assets/detailtable.css';
 
 
 const CardDetail = (props) => {
@@ -10,15 +11,15 @@ const CardDetail = (props) => {
       <Header />
 
       <CardDetailWrapper>
-        <div style={{ display: "flex" }}>
-        <table border="1" bordercolor="blue" width ="400" height="800" align = "center" >
-          <tr align="center">
-              <td>
+        <div style={{ display: "flex", textAlign:"center" }}>
+        <table className="first-table">
+          <tr>
+              <td className="td-bottom">
                 리더 이름 <br /><br />
                 리더 이메일
               </td>
             </tr>
-          <tr align="center">
+          <tr>
               <td>
                 모임 형태 (온라인/오프라인) <br /><br />
                 모임 멤버 수 <br /><br />
@@ -27,14 +28,14 @@ const CardDetail = (props) => {
           </tr>
         </table>
 
-        <table border="1" bordercolor="blue" width ="500" height="800" align = "center" >
-          <tr align="center">
-              <td height="200">
+        <table className="second-table">
+          <tr>
+              <td height="300" className="td-bottom">
                 모임 제목 <br /><br />
                 요구하는 기술 스택
               </td>
           </tr>
-          <tr align="center">
+          <tr>
             <td>모임 상세내용</td>
           </tr>
         </table>
