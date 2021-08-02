@@ -14,7 +14,7 @@ function Loader({ type, color, message }) {
 				transform: "translate(-50%, -50%)"
 			}}>
 				<h1>{message}</h1>
-				<h4>창을 닫지 말아주세요🌊</h4>
+				<h4>codewave에 접속중입니다..🌊</h4>
 				<ReactLoading
 					type={type}
 					color={color}

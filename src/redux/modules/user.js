@@ -59,6 +59,8 @@ const loginAPI = (email, pw) => {
       .then((res) => {
         console.log(res.data);
 
+        setCookie(res.data.access_token.access_token);
+
         if(res.data === "wrong email") {
           ErrorAlert("올바르지 않은 이메일입니다. 다시 입력해 주세요.");
           return;
@@ -77,6 +79,7 @@ const loginAPI = (email, pw) => {
         console.log(userInfo);
 
         dispatch(setUser(userInfo));
+        localStorage.setItem("username", userInfo.email);
       })
       .catch((err) => {
         console.log(err.response.data);
@@ -162,7 +165,7 @@ const actionCreators = {
   loginCheckAPI,
   logout,
   editProfileAPI,
-  //isLogin
+  // isLogin
 };
 
 export { actionCreators };

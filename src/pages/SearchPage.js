@@ -45,7 +45,29 @@ const SearchPage = (props) => {
 	}
 
 	if (!posts) {
-		return null;
+		return (
+		<PostListBlock>
+			<Header />
+			
+			<PostWrapper>
+				<Text bold size="28" marginBottom="24">
+					나에게 맞는 모임을 찾아보세요!
+				</Text>
+				
+				<Formgroup>
+					<Input placeholder="키워드를 검색해보세요" />
+					<SearchButton type="submit">검색</SearchButton>
+				</Formgroup>
+
+				{/* <PostBlock>
+					{posts.map(post => (
+						<PostCard key={post.id} post={post} />
+					))}
+
+				</PostBlock> */}
+			</PostWrapper>
+		</PostListBlock>
+	);;
 	}
 
 

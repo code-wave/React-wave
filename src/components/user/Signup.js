@@ -48,21 +48,21 @@ const Signup = ({ history }) => {
         const targetPw = e.target.value;
         setPw(targetPw);
 
-        if (targetPw.length < 4) {
-            pwInfoLen.classList.add('error');
-            pwInfoLen.classList.remove('ok');
-        } else {
-            pwInfoLen.classList.remove('error');
-            pwInfoLen.classList.add('ok');
-        }
+        // if (targetPw.length < 4) {
+        //     pwInfoLen.classList.add('error');
+        //     pwInfoLen.classList.remove('ok');
+        // } else {
+        //     pwInfoLen.classList.remove('error');
+        //     pwInfoLen.classList.add('ok');
+        // }
 
-        if (!pwMatch(targetPw)) {
-            pwInfoMatch.classList.add('error');
-            pwInfoMatch.classList.remove('ok');
-        } else {
-            pwInfoMatch.classList.add('ok');
-            pwInfoMatch.classList.remove('error');
-        }
+        // if (!pwMatch(targetPw)) {
+        //     pwInfoMatch.classList.add('error');
+        //     pwInfoMatch.classList.remove('ok');
+        // } else {
+        //     pwInfoMatch.classList.add('ok');
+        //     pwInfoMatch.classList.remove('error');
+        // }
 
         if (pwContinuous(targetPw)) {
             pwInfoContinuos.classList.add('error');
@@ -79,13 +79,13 @@ const Signup = ({ history }) => {
         const checkPw = e.target.value;
         setPwCheck(checkPw);
 
-        if (pw === checkPw) {
-            rePwInfoUl.current.style.display = "block";
-            rePwInfoLiT.current.style.color = "#683fee";
-            return false;
-        } else {
-            rePwInfoUl.current.style.display = "none";
-        }
+        // if (pw === checkPw) {
+        //     rePwInfoUl.current.style.display = "block";
+        //     rePwInfoLiT.current.style.color = "#683fee";
+        //     return false;
+        // } else {
+        //     rePwInfoUl.current.style.display = "none";
+        // }
     }
 
     //이메일 중복확인
@@ -255,7 +255,7 @@ const Signup = ({ history }) => {
                                             changePw(e, pwInfoLen.current, pwInfoMatch.current, pwInfoContinuos.current);
                                     }} />
                             <InfoUl className="checkPw" ref={pwInfoUl}>
-                                    <li ref={pwInfoLen}>·글자수는 4~20 글자 </li>
+                                    <li ref={pwInfoLen}>·글자수는 6~20 글자 </li>
                                     <li ref={pwInfoMatch}>·영문/숫자만 허용, 2개 이상의 조합</li>
                                     <li ref={pwInfoContinuos}>·동일한 문자 3개 이상 연속 사용 불가</li>
                             </InfoUl>

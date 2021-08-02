@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useSelector, useDispatch } from "react-redux";
 import { withRouter } from 'react-router-dom';
@@ -10,10 +10,22 @@ import '../assets/wave.css';
 
 const Header = ({ history }) => {
 	const dispatch = useDispatch();
-	const isLogin = useSelector((state) => state.user.isLogin);
+	let isLogin = useSelector((state) => state.user.isLogin);
+	// let [isLogin, setIsLogin] = useState(false);
+
+
+	useEffect(() => {
+		const username = localStorage.getItem("username");
+
+		if (username) {
+			isLogin = true;
+		}
+	}, []);
+
 
 	const LogOut = () => {
-    dispatch(actionCreators.logout());
+		dispatch(actionCreators.logout());
+			isLogin = false;
   };
 	
 	return (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useSelector } from 'react';
 import styled from 'styled-components';
 import { Text, Loader } from '../elements';
 import bannerImage from '../assets/image/main_banner.png';
@@ -15,12 +15,17 @@ import { Link, Route } from 'react-router-dom';
 const MainPage = () => {
 	const [posts, setPosts] = useState([]);
 	const [loading, setLoading] = useState(false);
+	// const [isLogin, setIsLogin] = useState(false);
+	// const isLogin = useSelector((state) => state.user.isLogin);
 
 	useEffect(() => {
 		const fetchPost = async () => {
 			setLoading(true);
 
+
+
 			try {
+
 				const API = `${config.api}/study-posts/limit=4&offset=0`;
 				const response = await axios.get(API);
 				console.log(response.data.study_posts);
@@ -44,7 +49,49 @@ const MainPage = () => {
 	}
 
 	if (!posts) {
-		return null;
+		return (
+		<MainBlock>
+			<Header />
+
+			<HeaderBlock>
+				<ImageBlock>
+					<MainImage src={bannerImage}/>
+				</ImageBlock>
+
+					<TextBlock>
+						<Text bold size="36" color="#000" marginBottom="36">
+							개발자들의 공간, Code Wave
+							</Text>
+						<Text size="18" color="#000">
+							Code Wave는 프로젝트나 스터디를 하기 위해 <br /> 팀원이 필요한
+							개발자들이 한데 모여 <br />다양한 기술스택과 분야를 가진 사람들과 함께 할 수 있는 <br />
+							웹 기반 플랫폼입니다. 
+						</Text>
+					</TextBlock>
+			</HeaderBlock>
+
+			<BodyBlock>
+				<SearchBlock>
+					<SearchText>
+						원하는 모임을 찾아보세요!
+					</SearchText>
+					
+					<Formgroup>
+						<Input placeholder="키워드 검색" />
+						<SearchButton type="submit">검색</SearchButton>
+					</Formgroup>
+				</SearchBlock>
+
+				{/* <PostBlock>
+					{posts.map(p => (
+						<PostCard key={p.id} post={p} />
+					))}
+				</PostBlock> */}
+				</BodyBlock>
+			<Footer />
+
+		</MainBlock>
+	);;
 	}
 
 
